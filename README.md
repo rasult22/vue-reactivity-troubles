@@ -1,4 +1,4 @@
-# vue-reactivity-troubles
+#  Vue Reactivity Troubles
 This repo is used for collecting vue 2.6 reactivity issues and for collecting solving techniques for them. 
 
 
