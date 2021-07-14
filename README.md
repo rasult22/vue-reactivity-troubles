@@ -27,10 +27,12 @@ export default {
       this.arr[0].increment += 1; // Reference assign
       this.arr[1] += 1; // Primitive assign
       
-      // Solving approach:
+      // Solving approaches:
       // 1. Use "this.$set" - only for a spicific index
       // this.$set(this.arr, 0, this.arr[0]);
-
+      
+      // OR USE:
+      
       // 2. Reassign a copy of itself  (It'll make everying inside an array reactive again)
       // this.arr = this.arr.map((x) => x);
     },
