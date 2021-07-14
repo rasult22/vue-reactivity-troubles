@@ -42,6 +42,8 @@ export default {
 
   created() {
    // Imagine this happened somewhere in the Vuex commits/dispatches
+   
+   // This assign approach won't make an object or primitive inside an array reactive
     this.arr[0] = {
       increment: 0,
     };
