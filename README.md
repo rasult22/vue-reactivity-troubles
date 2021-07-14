@@ -6,6 +6,8 @@
 #### Common approaches to break Vue's reactivity:
 
 ##### 1. Assign to an array by index:
+Code Sandbox: https://codesandbox.io/s/youthful-river-rti6p?file=/src/components/Arrays.vue
+
 ```vue
 <template>
   <div>
