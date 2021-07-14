@@ -26,6 +26,13 @@ export default {
       // Won't update the view, because an object inside an array is not reactive
       this.arr[0].increment += 1; // Reference assign
       this.arr[1] += 1; // Primitive assign
+      
+      // Solving approach:
+      // 1. Use this.$set  -  only for a spicific index
+      // this.$set(this.arr, 0, this.arr[0]);
+
+      // 2. Reassign a copy of itself  (It'll make everying inside an array reactive again)
+      // this.arr = this.arr.map((x) => x);
     },
   },
 
