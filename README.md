@@ -30,6 +30,7 @@ export default {
   },
 
   created() {
+   // Imagine this happened somewhere in the Vuex commits/dispatches
     this.arr[0] = {
       increment: 0,
     };
