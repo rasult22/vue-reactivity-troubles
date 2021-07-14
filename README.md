@@ -3,7 +3,7 @@
 
 
 
-### Common approaches to break Vue's reactivity
+#### Common approaches to break Vue's reactivity:
 
 ##### 1. Assign to an array by index:
 ```vue
