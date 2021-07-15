@@ -118,4 +118,89 @@ export default {
 
 ```
 
+##### 2. Assigning a new property to an object inside arrays with ".forEach":
+Sandbox: https://codesandbox.io/s/breaking-vue-reactivity-rti6p?file=/src/components/ArrayOfObjects.vue:0-2107
+```Vue
+
+<template>
+  <div>
+    <h4>Array Of Objects</h4>
+    <pre>
+      {{ persons }}
+    </pre>
+    Computed prop:
+    <h2>{{ getAnakin }}</h2>
+    <button @click="mutate">Turn to the darkside</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      persons: [
+        {
+          name: "Obi Wan",
+          age: 28,
+        },
+        {
+          name: "Anakin",
+          age: 19,
+        },
+      ],
+    };
+  },
+  computed: {
+    getAnakin() {
+      // This computed property won't update because "race" isn't reactive
+      const anakin = this.persons.find((person) => person.name === "Anakin");
+      return `I'm ${anakin.name}, I've become ${anakin.race} now!`;
+    },
+  },
+  methods: {
+    mutate() {
+      const anakin = this.persons.find((person) => person.name === "Anakin");
+      // You've probably know that this not going to work
+      anakin.race = "Sith";
+
+      // This one also won't work
+      this.$set(anakin, "race", "Sith");
+
+      // Reassigning an entire array also won't help \ (Computed prop reacts to it because of persons array reactivity, not anakin)
+      this.persons = [...this.persons];
+      // Set timeout will prove you, that the race prop is still not reactive
+      setTimeout(() => {
+        const anakin = this.persons.find((person) => person.name === "Anakin");
+        anakin.race = "Human";
+        console.log(
+          this.persons,
+          "Data has changed, but template doesn't react"
+        );
+      }, 2000); // Reassiging an array didn't help, because objects inside was mutated (added a new props without Vue.set)
+
+      // Solving approaches:
+      // 1. Combine reassigning array and object, like this:
+      // this.persons = this.persons.map((person) => {
+      //   return { ...person };
+      //   // OR if changes was too deep you can use
+      //   // return JSON.parse(JSON.stringify(person))
+      // });
+    },
+  },
+  created() {
+    // Imagine this happening somewhere in the Vuex (dispaches, mutations)
+    this.persons.forEach((person) => {
+      person.race = "Jedi";
+    });
+  },
+};
+</script>
+
+<style>
+</style>
+
+
+```
+
+
 
