@@ -119,7 +119,7 @@ export default {
 ```
 ##### ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-##### 2. Assigning a new property to an object inside arrays with ".forEach":
+##### 3. Assigning a new property to an object inside arrays with ".forEach":
 Sandbox: https://codesandbox.io/s/breaking-vue-reactivity-rti6p?file=/src/components/ArrayOfObjects.vue:0-2107
 ```Vue
 
