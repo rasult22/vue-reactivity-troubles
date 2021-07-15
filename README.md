@@ -3,9 +3,9 @@
 
 
 
-#### Common approaches to break Vue's reactivity:
+#### Common cases when Vue's reactivity breaks:
 
-##### 1. Assign to an array by index:
+##### 1. Assigning to an array by index:
 Code Sandbox: https://codesandbox.io/s/youthful-river-rti6p?file=/src/components/Arrays.vue
 
 ```vue
@@ -37,6 +37,9 @@ export default {
       
       // 2. Reassign a copy of itself  (It'll make everying inside an array reactive again)
       // this.arr = this.arr.map((x) => x);
+      
+      
+      // 3. Use only .push/.slice Array methods to manipulate an array instead.
     },
   },
 
@@ -55,4 +58,64 @@ export default {
 ```
 ##### -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-##### 2. Initializing an object prop, before making it reactive:
+##### 2. Assining a value to an uninitialized object prop (Vue.set jokes) :
+Sandbox: https://codesandbox.io/s/breaking-vue-reactivity-rti6p?file=/src/components/Objects.vue
+```Vue
+<template>
+  <div>
+    <pre> {{ person }} </pre>
+    <button @click="mutate">Change last name</button>
+    <br />
+    <!-- Computed property based on our person object -->
+    Computed prop:<b>
+      {{ getFullName }}
+    </b>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      person: {
+        name: "Johnatan",
+        age: 20,
+      },
+    };
+  },
+  methods: {
+    mutate() {
+      // Feel free to comment/uncomment code to check all the statements
+
+      // This won't work (because "last" prop isn't reactive)
+      this.person.last = "Beckham";
+
+      // ! IMPORTANT to notice
+      // Even this example won't work, because the property "last" was initialized before in "created" hook.
+      // this.$set(this.person, "last", "Beckham"); // Works only if prop "last" wasn't initialized before
+
+      // Solving approaches:
+      // 1. Reassign the copy of an object to itself
+      // this.person = { ...this.person, last: "Beckham" };
+
+      // 2. Same as first, but with Object.assign
+      // this.person = Object.assign({}, this.person, { last: "Beckham" });
+      
+    },
+  },
+  computed: {
+    getFullName() {
+      // Computed property won't react to changes in "last" property while it isn't reactive
+      return this.person.name + " " + this.person.last;
+    },
+  },
+  created() {
+    // Imagine this could happen in Vuex state (in dispaches, mutations). And you using this object in computed property
+    this.person.last = "Stone";
+  },
+};
+</script>
+
+```
+
+
