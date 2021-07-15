@@ -91,7 +91,7 @@ export default {
       this.person.last = "Beckham";
 
       // ! IMPORTANT to notice
-      // Even this example won't work, because the property "last" was initialized before in "created" hook.
+      // Even this example won't work, because the property "last" was initialized before (in "created" hook or in line 91).
       // this.$set(this.person, "last", "Beckham"); // Works only if prop "last" wasn't initialized before
 
       // Solving approaches:
